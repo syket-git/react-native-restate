@@ -1,10 +1,26 @@
-import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native'
+import {Alert, Image, ScrollView, Text, TouchableOpacity, View} from 'react-native'
 import React from 'react'
 import {SafeAreaView} from 'react-native-safe-area-context'
 import images from '@/constants/images';
 import icons from '@/constants/icons';
+import {login} from "@/lib/appwrite";
+import {useGlobalContext} from "@/lib/global-provider";
 
 const SignIn = () => {
+
+    const {refetch, loading, isLoggedIn} = useGlobalContext()
+
+
+    const handleLogin = async () => {
+        const result = await login()
+        if (result) {
+            refetch()
+        } else {
+            Alert.alert("Error", "Failed to login");
+        }
+    }
+
+
     return (
         <SafeAreaView className="bg-white h-full">
             <ScrollView contentContainerClassName="h-full">
@@ -25,6 +41,7 @@ const SignIn = () => {
                         Login to ReState with Google
                     </Text>
                     <TouchableOpacity
+                        onPress={handleLogin}
                         className='bg-white shadow-md shadow-zinc-300 rounded-full w-full py-4 mt-5'>
                         <View className="flex gap-3 flex-row items-center justify-center">
                             <Image
