@@ -2,11 +2,11 @@ import {Image, Text, TouchableOpacity, View} from "react-native";
 import images from "@/constants/images";
 import icons from "@/constants/icons";
 
-export const FeaturedCard = ({item, onPress}: { item: any, onPress: () => void }) => {
+export const FeaturedCard = ({item, onPress}: { item: any, onPress: (id: string) => void }) => {
 
 
     return (
-        <TouchableOpacity className={"w-60 h-80 rounded-xl relative"}>
+        <TouchableOpacity onPress={() => onPress(item?.$id)} className={"w-60 h-80 rounded-xl relative"}>
             <Image source={{uri: item.image}} className={"w-full h-full rounded-xl"}/>
             <Image source={images.cardGradient} className={"w-full h-full absolute bottom-0 rounded-xl"}/>
 
@@ -30,11 +30,11 @@ export const FeaturedCard = ({item, onPress}: { item: any, onPress: () => void }
     )
 }
 
-export const Card = ({item, onPress}: { item: any, onPress: () => void }) => {
+export const Card = ({item, onPress}: { item: any, onPress: (id: string) => void }) => {
     return (
         <TouchableOpacity
             className="flex-1 w-full mt-4 px-3 py-4 rounded-lg bg-white shadow-lg shadow-black-100/70 relative"
-            onPress={onPress}
+            onPress={() => onPress(item?.$id)}
         >
             <View className="flex flex-row items-center absolute px-2 top-5 right-5 bg-white/90 p-1 rounded-full z-50">
                 <Image source={icons.star} className="size-2.5"/>

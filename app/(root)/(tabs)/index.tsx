@@ -5,7 +5,7 @@ import icons from '@/constants/icons'
 import Search from '@/components/Search'
 import {Card, FeaturedCard} from "@/components/Card";
 import {useGlobalContext} from "@/lib/global-provider";
-import {useLocalSearchParams} from "expo-router";
+import {router, useLocalSearchParams} from "expo-router";
 import {useAppwrite} from "@/lib/useAppwrite";
 import {getLatestProperties, getProperties} from "@/lib/appwrite";
 import {useEffect} from "react";
@@ -13,6 +13,11 @@ import Filter from "@/components/Filter";
 import NoResult from "@/components/NoResult";
 
 export default function Index() {
+
+
+    const handleClick = (id: string) => {
+        router.push(`/(root)/properties/${id}`);
+    }
 
     const {user} = useGlobalContext();
 
@@ -55,7 +60,7 @@ export default function Index() {
                           loading ? <ActivityIndicator size="large" className="text-primary-300 my-10"/> :
                               <NoResult/>
                       }
-                      renderItem={({item}) => <Card onPress={() => console.log('')} item={item}/>}
+                      renderItem={({item}) => <Card onPress={(id) => handleClick(id)} item={item}/>}
                       keyExtractor={(item, index) => index.toString()}
                       showsVerticalScrollIndicator={false}
                       numColumns={2}
@@ -104,7 +109,7 @@ export default function Index() {
                                                         contentContainerClassName="flex gap-5"
                                                         data={latestProperties}
                                                         renderItem={({item}: any) => <FeaturedCard item={item}
-                                                                                                   onPress={() => console.log('')}/>
+                                                                                                   onPress={(id) => handleClick(id)}/>
                                                         }
                                                         keyExtractor={item => item.$id}
                                               />
